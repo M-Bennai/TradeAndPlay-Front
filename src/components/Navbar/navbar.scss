@@ -1,0 +1,53 @@
+.navbar {
+  font-family: "Poppins";
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  background-color: #d8e8fa;
+
+  .nav-first-part {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  .div-logo {
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+
+    span {
+      font-style: normal;
+      font-weight: 700;
+      font-size: 24px;
+      line-height: 36px;
+      color: #80ca7a;
+    }
+  }
+
+  .nav-links {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 20px;
+    a {
+      color: black;
+    }
+  }
+
+  .nav-compte {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  a {
+    text-decoration: none;
+  }
+}

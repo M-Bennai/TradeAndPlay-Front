@@ -14,8 +14,7 @@ const Navbar = () => {
         </div>
         <div className="nav-links">
           <NavLink to="/annonces">Annonces</NavLink>
-          <p>Annonces</p>
-          <p>Annonces</p>
+          <NavLink to="/mesAnnonces">Mes annonces</NavLink>
           {/* <NavLink>Annonces</NavLink>
         <NavLink>Annonces</NavLink> */}
         </div>

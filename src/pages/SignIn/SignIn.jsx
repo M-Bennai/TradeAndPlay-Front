@@ -1,16 +1,23 @@
 import React from "react";
+import Input from "../../components/ui/input/Input";
 
 const SignIn = () => {
   return (
-    <div>
-      <h1>S'enrengistrer</h1>
+    <section className="signIn-page">
+      <h1>Créer un compte</h1>
+      <h2>
+        Créer votre compte pour pouvoir creer vos annonces et proposer des
+        échanges !
+      </h2>
       <form>
         <label>Email</label>
-        <input></input>
+        <Input></Input>
         <label>Mot de passe</label>
-        <input></input>
+        <Input></Input>
+        <button className="button">Creer un compte</button>
       </form>
-    </div>
+      <span>Vous avez deja un compte ? Connectez vous</span>
+    </section>
   );
 };
 

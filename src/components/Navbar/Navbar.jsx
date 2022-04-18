@@ -1,8 +1,12 @@
 import React from "react";
 import logo from "../../assets/logo.svg";
+import { useContext } from "react";
 import { NavLink, Link } from "react-router-dom";
+import { AuthContext } from "../../auth/auth";
 
 const Navbar = () => {
+  const { authState } = useContext(AuthContext);
+  console.log("authState.role :>> ", authState);
   return (
     <nav className="navbar">
       <div className="nav-first-part">
@@ -13,7 +17,9 @@ const Navbar = () => {
           </Link>
         </div>
         <div className="nav-links">
-          <NavLink to="/annonces">Annonces</NavLink>
+          <NavLink to={authState.role === "client" ? "/annonces" : ""}>
+            Annonces
+          </NavLink>
           <NavLink to="/mesAnnonces">Mes annonces</NavLink>
           {/* <NavLink>Annonces</NavLink>
         <NavLink>Annonces</NavLink> */}

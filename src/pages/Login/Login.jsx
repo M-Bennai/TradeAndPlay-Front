@@ -1,42 +1,48 @@
 import React, { useState, useContext } from "react";
-import Input from "../../components/ui/input/Input";
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../auth/auth";
-
-// import { useForm } from "react-hook-form";
-// import * as yup from "yup";
-// import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
 
+const schema = yup.object().shape({
+  email: yup.string().email().required("This field is required"),
+  password: yup
+    .string()
+    .min(3, "Please fill in the password")
+    .required("This field is required"),
+});
 const url = `${process.env.REACT_APP_API_URL}/api/user/login`;
 
-const Login = ({ history }) => {
+const Login = () => {
   const { setAuthState, authState } = useContext(AuthContext);
-  const [loading, setLoading] = useState(false);
+  //const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [user, setUser] = useState({
-    username: "",
-    password: "",
-  });
+  const navigate = useNavigate();
 
-  const handleChange = ({ currentTarget }) => {
-    const { name, value } = currentTarget;
-    setUser({ ...user, [name]: value });
-  };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
 
   const onSubmit = async (data) => {
     console.log("data :>> ", data);
-    setLoading(true);
+    //setLoading(true);
     try {
       const res = await axios.post(url, data);
       localStorage.setItem("accessToken", res.data.token);
-      setLoading(false);
+      //setLoading(false);
       setAuthState({ ...authState, status: true });
-      history.push("/accueil/home");
+      navigate("/", { replace: true });
       setError(null);
     } catch (error) {
       console.log("error :>> ", error);
       setError(error.response.data.msg);
-      setLoading(false);
+      //setLoading(false);
       console.log("error :>> ", error.response.data.msg);
     }
   };
@@ -55,31 +61,41 @@ const Login = ({ history }) => {
 
   return (
     <section className="login-page">
-      <h1>Connexion</h1>
-      <h2>
-        Accèdez à votre compte pour commencer a creer des annonces et pouvoir
-        échanger des jouets
-      </h2>
-      <form>
-        <label>Email</label>
-        <Input
-          type="email"
-          name="email"
-          placeholder="Email"
-          onChange={handleChange}
-        ></Input>
-        <label>Mot de passe</label>
-        <Input
-          type="password"
-          name="password"
-          placeholder="password"
-          onChange={handleChange}
-        ></Input>
-        <button className="button" type="submit">
-          Connexion
-        </button>
-      </form>
-      <span>Pas encore de compte ? Creer un compte</span>
+      <div className="container-login">
+        <h1>Connexion</h1>
+        <h2>
+          Accèdez à votre compte pour commencer a creer des annonces et pouvoir
+          échanger des jouets
+        </h2>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <label>Email</label>
+          <input
+            className="input"
+            {...register("email", {
+              required: "Required",
+            })}
+            type="email"
+            name="email"
+            placeholder="Email"
+          ></input>
+          <label>Mot de passe</label>
+          <input
+            className="input"
+            {...register("password", {
+              required: "Required",
+            })}
+            type="password"
+            name="password"
+            placeholder="Password"
+          ></input>
+          <button className="button" type="submit">
+            Connexion
+          </button>
+        </form>
+        <div className="down-msg-login">
+          <span>Pas encore de compte ? Creer un compte</span>
+        </div>
+      </div>
     </section>
   );
 };

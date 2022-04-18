@@ -1,7 +1,48 @@
 .login-page {
-  h1 {
-    font-weight: 600;
-    font-size: 30px;
-    line-height: 45px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .container-login {
+    
+    h1 {
+      font-weight: 600;
+      font-size: 30px;
+      line-height: 45px;
+    }
+
+    h2 {
+      margin-top: 1rem;
+      width: 33rem;
+      margin-bottom: 2rem;
+    }
+    .input {
+      width: 236px;
+      height: 38px;
+      border: 1px solid #dadbdc;
+      box-sizing: border-box;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+    }
+
+    label {
+      display: flex;
+      justify-content: left;
+      width: 15rem;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .down-msg-login {
+      display: flex;
+      justify-content: center;
+      margin-top: 1rem;
+    }
   }
 }

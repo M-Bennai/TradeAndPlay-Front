@@ -1,0 +1,8 @@
+.section-footer {
+  background-color: $lightblue;
+  .footer-title-media {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}

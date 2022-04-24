@@ -9,6 +9,9 @@ import { AuthContext } from "./auth/auth";
 import { useEffect, useState } from "react";
 import Footer from "./components/Footer/Footer";
 import UserInfosContextProvider from "./context/UserInfosContext";
+import DetailsAnnonce from "./pages/DetailsAnnonce/DetailsAnnonce";
+import PageNotFound from "./pages/PageNotFound/PageNotFound";
+import CreerAnnonce from "./pages/CreerAnnonce/CreerAnnonce";
 
 function App() {
   const [authState, setAuthState] = useState({
@@ -31,11 +34,14 @@ function App() {
         <UserInfosContextProvider>
           <Navbar />
           <Routes>
-            <Route path="/" element={<Homepage />} />
-            <Route path="/annonces" element={<Annonces />} />
-            <Route path="/mesAnnonces" element={<MesAnnonces />} />
+            <Route eaxct path="/" element={<Homepage />} />
+            <Route exact path="/annonces" element={<Annonces />} />
+            <Route path="/mesAnnonces/:id" element={<MesAnnonces />} />
+            <Route path="/annonces/:id" element={<DetailsAnnonce />} />
             <Route path="/connexion" element={<Login />} />
             <Route path="/senrengistrer" element={<SignIn />} />
+            <Route path="/creeruneannonce" element={<CreerAnnonce />} />
+            <Route element={<PageNotFound />} />
           </Routes>
           <Footer />
         </UserInfosContextProvider>

@@ -5,6 +5,7 @@ import axios from "axios";
 const MesAnnonces = () => {
   const { clientId } = useContext(UserInfosContext);
   const [myArticle, setMyArticles] = useState([]);
+
   console.log("clientId :>> ", clientId);
   useEffect(() => {
     axios
@@ -13,7 +14,9 @@ const MesAnnonces = () => {
       )
       .then((res) => {
         console.log("res.data :>> ", res.data.allArticle);
+        console.log("myArticle :>> ", myArticle);
         setMyArticles(res.data.allArticle);
+        console.log("myArticle :>> ", myArticle);
       })
       .catch((err) => {
         console.log("err :>> ", err);
@@ -22,6 +25,7 @@ const MesAnnonces = () => {
   return (
     <div>
       <h1>Mes annonces</h1>
+      <div>{myArticle}</div>
     </div>
   );
 };

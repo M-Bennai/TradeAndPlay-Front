@@ -17,10 +17,8 @@ const Navbar = () => {
           </Link>
         </div>
         <div className="nav-links">
-          <NavLink to={authState.role === "client" ? "/annonces" : ""}>
-            Annonces
-          </NavLink>
-          <NavLink to="/mesAnnonces">Mes annonces</NavLink>
+          <NavLink to="/annonces">Annonces</NavLink>
+          <NavLink to="/mesAnnonces/:id">Mes annonces</NavLink>
           {/* <NavLink>Annonces</NavLink>
         <NavLink>Annonces</NavLink> */}
         </div>

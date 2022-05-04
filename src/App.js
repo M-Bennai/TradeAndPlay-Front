@@ -17,6 +17,9 @@ function App() {
   const [authState, setAuthState] = useState({
     firstName: "",
     lastName: "",
+    email: "",
+    id: "",
+    image: "",
     role: "",
     status: false,
   });
@@ -34,7 +37,7 @@ function App() {
         <UserInfosContextProvider>
           <Navbar />
           <Routes>
-            <Route eaxct path="/" element={<Homepage />} />
+            <Route exact path="/" element={<Homepage />} />
             <Route exact path="/annonces" element={<Annonces />} />
             <Route path="/mesAnnonces/:id" element={<MesAnnonces />} />
             <Route path="/annonces/:id" element={<DetailsAnnonce />} />

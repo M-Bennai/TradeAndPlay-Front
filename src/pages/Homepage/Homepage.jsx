@@ -1,11 +1,44 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import box from "../../assets/box.svg";
 import wave from "../../assets/homepage-waves.svg";
 import earth from "../../assets/earth.svg";
 import toysbox from "../../assets/toysbox.svg";
 import budget from "../../assets/budget.svg";
+import { AuthContext } from "../../auth/auth";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { UserInfosContext } from "../../context/UserInfosContext";
 
 const Homepage = () => {
+  const urlAuth = `${process.env.REACT_APP_API_URL}/api/user/auth`;
+  //  const { setClientName } = useContext(UserInfosContext);
+  const { authState, setAuthState } = useContext(AuthContext);
+
+  useEffect(() => {
+    // setClientName("");
+    axios
+      .get(urlAuth, {
+        headers: {
+          accessToken: localStorage.getItem("accessToken"),
+        },
+      })
+      .then((res) => {
+        if (res.data.error) {
+          setAuthState({ ...authState, status: false });
+        } else {
+          localStorage.setItem("user", JSON.stringify(res.data));
+          setAuthState({
+            firstName: res.data.firstName,
+            lastName: res.data.lastName,
+            role: res.data.role,
+            image: res.data.image,
+            id: res.data.id,
+            status: true,
+          });
+        }
+      });
+  }, []);
+
   return (
     <section className="homepage">
       <div className="container-banner">

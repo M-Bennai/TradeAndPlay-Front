@@ -18,16 +18,33 @@ const Navbar = () => {
         </div>
         <div className="nav-links">
           <NavLink to="/annonces">Annonces</NavLink>
-          <NavLink to="/mesAnnonces/:id">Mes annonces</NavLink>
+          {authState.role === "client" ? (
+            <NavLink to="/mesAnnonces/:id">Mes annonces</NavLink>
+          ) : (
+            ""
+          )}
+
           {/* <NavLink>Annonces</NavLink>
         <NavLink>Annonces</NavLink> */}
         </div>
       </div>
       <div className="nav-second-part">
-        <div className="nav-compte">
-          <NavLink to="/connexion">Connexion</NavLink>
-          <NavLink to="/senrengistrer">Créer un compte</NavLink>
-        </div>
+        {authState.role === "client" ? (
+          <div>
+            <NavLink to="/moncompte">
+              <img
+                className="profil-img-navbar"
+                src={authState.image}
+                alt="img-client"
+              />
+            </NavLink>
+          </div>
+        ) : (
+          <div className="nav-compte">
+            <NavLink to="/connexion">Connexion</NavLink>
+            <NavLink to="/senrengistrer">Créer un compte</NavLink>
+          </div>
+        )}
       </div>
     </nav>
   );

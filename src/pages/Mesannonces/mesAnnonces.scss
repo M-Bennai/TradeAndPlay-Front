@@ -1,0 +1,32 @@
+.section-mes-annonces {
+  min-height: 100vh;
+  .my-articles-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  h1 {
+    font-weight: 600;
+    font-size: 25px;
+    line-height: 45px;
+  }
+
+  .block-article {
+    display: flex;
+    flex-direction: row;
+    margin-top: 3rem;
+    .article-img {
+      img {
+        width: 180px;
+        height: 180px;
+      }
+    }
+
+    .info-article {
+      background-color: #f8f8f8;
+      width: 450px;
+      height: 180px;
+    }
+  }
+}

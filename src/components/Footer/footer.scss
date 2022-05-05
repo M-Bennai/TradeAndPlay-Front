@@ -1,8 +1,29 @@
 .section-footer {
   background-color: $lightblue;
+  height: 350px;
+
   .footer-title-media {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    padding: 3rem;
+
+    h1 {
+      font-weight: 800;
+      font-size: 35px;
+      background: linear-gradient(
+        180deg,
+        rgba(158, 215, 154, 0.79) 0%,
+        #80ca7a 100%
+      );
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .social-media {
+      width: 2rem;
+      justify-content: space-between;
+    }
   }
 }

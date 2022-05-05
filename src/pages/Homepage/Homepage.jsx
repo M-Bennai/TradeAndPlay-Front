@@ -1,7 +1,11 @@
 import React, { useContext, useEffect } from "react";
 import box from "../../assets/box.svg";
 import wave from "../../assets/homepage-waves.svg";
+import wavedown from "../../assets/down-banner.svg";
+import upperblue from "../../assets/upper-blue.svg";
+import downblue from "../../assets/down-blue.svg";
 import earth from "../../assets/earth.svg";
+import child from "../../assets/child-playing.svg";
 import toysbox from "../../assets/toysbox.svg";
 import budget from "../../assets/budget.svg";
 import { AuthContext } from "../../auth/auth";
@@ -100,6 +104,59 @@ const Homepage = () => {
               </p>
             </article>
           </div>
+        </div>
+        <img className="wave-svg" src={wavedown} alt={wavedown} />
+
+        <div className="our-mission">
+          <div className="description-block">
+            <h1>Notre mission</h1>
+            <p>
+              “Faire de l’échange de jouets l’option incontournable est une
+              priorité pour nous car cela profite à tout le monde. Nous voulons
+              aider les gens à économiser de l’argent et à désencombrer sans se
+              sentir coupables de voir leurs articles mis en décharge”
+            </p>
+          </div>
+        </div>
+      </div>
+      <div className="homepage-3rd-screen">
+        <img src={upperblue} alt={upperblue} />
+        <div className="homepage-description-third">
+          <div className="description-block">
+            <h2>Consulter les annonces et proposez un échange</h2>
+            <h3>
+              Les jouets sont trié par catégorie d’âge et de prix afin de
+              proposer un échange simple et équitable.
+            </h3>
+            <p>
+              Si un jouet vous intéresse et que vous avez un jouet de la même
+              catégorie a échanger, vous pouvez proposer un échange.
+            </p>
+          </div>
+        </div>
+        <img src={downblue} alt={downblue} />
+      </div>
+      <div className="homepage-4th-screen">
+        <div className="description-block">
+          <h4>Creer une annonce</h4>
+          <p>
+            Pour être accepté, ton objet doit être en bon état. Choisis donc
+            avec soin quels objets tu souhaites échanger, et suit les étapes du
+            questionnaire d’échange. Crée ton compte et renseigne tes
+            informations.
+          </p>
+          <p>
+            L’offre de reprise est limitée aux personnes âgées de 18 ans et
+            plus. Ce sont donc les parents qui décident d’échanger les objets
+            ludo-éducatifs de leur famille et gèrent les échanges.
+          </p>
+          <p>
+            Tous les produits doivent être propres, complets, ou s’ils sont
+            incomplets alors encore jouable, en bon état de fonctionnement.
+            N’échange pas un objet que tu ne souhaiterais pas toi-même recevoir
+            en cadeau.
+          </p>
+          <img src={child} alt={child} />
         </div>
       </div>
     </section>

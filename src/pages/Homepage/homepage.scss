@@ -1,5 +1,4 @@
 .homepage {
-  font-family: Poppins;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -88,6 +87,128 @@
       p {
         max-width: 35rem;
       }
+    }
+  }
+
+  .our-mission {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .description-block {
+      display: flex;
+
+      padding-top: 5rem;
+      justify-content: center;
+      flex-direction: column;
+      max-width: 55rem;
+      h1 {
+        display: flex;
+        align-items: left;
+        width: 100%;
+        font-weight: 600;
+        font-size: 35px;
+        color: #77b1ef;
+      }
+
+      p {
+        margin-top: 1rem;
+        font-weight: 500;
+        font-size: 18px;
+
+        color: #4c616f;
+      }
+    }
+  }
+
+  .homepage-3rd-screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 10rem;
+
+    .homepage-description-third {
+      display: flex;
+      width: 100%;
+      background-color: #77b1ef;
+      flex-direction: column;
+
+      .description-block {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 4rem;
+        justify-content: center;
+      }
+
+      h2 {
+        font-weight: 700;
+        font-size: 32px;
+        line-height: 54px;
+        color: white;
+      }
+
+      h3 {
+        margin-top: 2rem;
+        max-width: 55rem;
+        font-weight: 600;
+        font-size: 22px;
+        line-height: 39px;
+      }
+      p {
+        margin-top: 1rem;
+        max-width: 55rem;
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 39px;
+        color: white;
+        padding-bottom: 4rem;
+      }
+    }
+  }
+
+  .homepage-4th-screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 10rem;
+    margin-bottom: 6rem;
+
+    .description-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 4rem;
+      justify-content: center;
+    }
+
+    h4 {
+      display: flex;
+      align-items: left;
+      width: 100%;
+      font-weight: 700;
+      font-size: 34px;
+      line-height: 54px;
+      /* identical to box height */
+      max-width: 55rem;
+      color: #2c95f1;
+    }
+
+    p {
+      max-width: 55rem;
+      font-weight: 400;
+      font-size: 22px;
+      margin-top: 2rem;
+      color: #000000;
+    }
+
+    img {
+      margin-top: 5rem;
+      display: flex;
+      align-items: right;
+
+      width: 200px;
+      height: 200px;
     }
   }
 

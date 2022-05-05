@@ -10,7 +10,7 @@ const Footer = () => {
         <div>
           <h1>Trade and Play</h1>
         </div>
-        <div>
+        <div className="social-media">
           <img src={instagram} alt={instagram} />
           <img src={twitter} alt={twitter} />
           <img src={linkedin} alt={linkedin} />

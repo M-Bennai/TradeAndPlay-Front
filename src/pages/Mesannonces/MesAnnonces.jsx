@@ -45,7 +45,14 @@ const MesAnnonces = () => {
     <section className="section-mes-annonces">
       <h1>Mes annonces</h1>
       <div className="my-articles-container">
-        {" "}
+        <div>
+          <button
+            className="btn-create-article"
+            onClick={() => navigate("/creeruneannonce", { replace: true })}
+          >
+            + Creer une annonce
+          </button>
+        </div>{" "}
         {myArticles.map((el) => {
           const { id, title, image, ageRange } = el;
           const goToArticleDetails = (id) => {

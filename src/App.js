@@ -12,6 +12,9 @@ import UserInfosContextProvider from "./context/UserInfosContext";
 import DetailsAnnonce from "./pages/DetailsAnnonce/DetailsAnnonce";
 import PageNotFound from "./pages/PageNotFound/PageNotFound";
 import CreerAnnonce from "./pages/CreerAnnonce/CreerAnnonce";
+import GererAnnonces from "./pages/AdminPages/gererAnnonces/GererAnnonces";
+import GererUtilisateurs from "./pages/AdminPages/gererUtilisateurs/GererUtilisateurs";
+import HomepageAdmin from "./pages/AdminPages/homepageAdmin/HomepageAdmin";
 
 function App() {
   const [authState, setAuthState] = useState({
@@ -38,12 +41,15 @@ function App() {
           <Navbar />
           <Routes>
             <Route exact path="/" element={<Homepage />} />
+            <Route exact path="/admin" element={<HomepageAdmin />} />
             <Route exact path="/annonces" element={<Annonces />} />
             <Route path="/mesAnnonces/:id" element={<MesAnnonces />} />
             <Route path="/annonces/:id" element={<DetailsAnnonce />} />
             <Route path="/connexion" element={<Login />} />
             <Route path="/senrengistrer" element={<SignIn />} />
             <Route path="/creeruneannonce" element={<CreerAnnonce />} />
+            <Route path="/gererannonces" element={<GererAnnonces />} />
+            <Route path="/gererutilisateurs" element={<GererUtilisateurs />} />
             <Route element={<PageNotFound />} />
           </Routes>
           <Footer />

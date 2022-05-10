@@ -1,8 +1,17 @@
 .signIn-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
   h1 {
     font-weight: 600;
     font-size: 30px;
     line-height: 45px;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
   }
 
   .input {

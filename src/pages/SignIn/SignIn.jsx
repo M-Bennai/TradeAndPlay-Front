@@ -32,11 +32,49 @@ const SignIn = () => {
         échanges !
       </h2>
       <form onSubmit={onSubmit}>
+        <label>Prénom</label>
+        <input
+          className="input"
+          type="firstName"
+          name="firstName"
+          placeholder="Prénom"
+        ></input>
+        <label>Nom</label>
+        <input
+          className="input"
+          type="lastName"
+          name="lastName"
+          placeholder="Nom"
+        ></input>
         <label>Email</label>
-        <input className="input"></input>
+        <input
+          className="input"
+          type="email"
+          name="email"
+          placeholder="Email"
+        ></input>
+        <label>Pseudo</label>
+        <input
+          className="input"
+          type="nickname"
+          name="nickname"
+          placeholder="Pseudo"
+        ></input>
+
+        <input
+          style={{ display: "none" }}
+          type="role"
+          name="role"
+          value="client"
+        ></input>
 
         <label>Mot de passe</label>
-        <input className="input"></input>
+        <input
+          className="input"
+          type="password"
+          name="password"
+          placeholder="Mot de passe"
+        ></input>
         <button className="button" type="submit">
           Creer un compte
         </button>

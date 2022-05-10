@@ -1,12 +1,21 @@
 import React from "react";
 import logo from "../../assets/logo.svg";
 import { useContext } from "react";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../auth/auth";
+import logout from "../../assets/logout.svg";
+import settings from "../../assets/settings.svg";
 
 const Navbar = () => {
-  const { authState } = useContext(AuthContext);
+  const { authState, setAuthState } = useContext(AuthContext);
+  const navigate = useNavigate();
   console.log("authState.role :>> ", authState);
+  const logOut = () => {
+    setAuthState({ ...authState, status: false });
+    localStorage.clear();
+    window.location.reload();
+    navigate("/", { replace: true });
+  };
   return (
     <nav className="navbar">
       <div className="nav-first-part">
@@ -38,6 +47,10 @@ const Navbar = () => {
                 alt="img-client"
               />
             </NavLink>
+
+            <div className="div-logout">
+              <img src={logout} alt={logout} onClick={logOut} />
+            </div>
           </div>
         ) : (
           <div className="nav-compte">

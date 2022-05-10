@@ -1,0 +1,53 @@
+.section-homepage-admin {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  align-items: center;
+  margin-top: 15vh;
+  h1 {
+    font-weight: 600;
+    font-size: 30px;
+    line-height: 45px;
+    /* identical to box height */
+
+    color: #000000;
+  }
+
+  .grid-menu-admin {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: center;
+    column-gap: 27px;
+    row-gap: 50px;
+    margin-top: 3rem;
+    padding-bottom: 3rem;
+    .block-menu {
+      cursor: pointer;
+      width: 294px;
+      height: 225px;
+      background: #fdfdfd;
+      border: 1px solid #f1f1f1;
+      border-radius: 10px;
+      padding: 25px;
+      h3 {
+        font-weight: 600;
+        font-size: 22px;
+        line-height: 33px;
+        /* identical to box height */
+
+        letter-spacing: -0.05em;
+
+        color: #2c95f1;
+      }
+
+      p {
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: -0.05em;
+
+        color: #6d6d6d;
+      }
+    }
+  }
+}

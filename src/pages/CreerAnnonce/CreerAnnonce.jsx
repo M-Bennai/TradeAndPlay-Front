@@ -2,7 +2,7 @@ import React from "react";
 
 const CreerAnnonce = () => {
   return (
-    <div>
+    <section className="section-creer-annonce">
       <h1>Creer une annonce</h1>
       <p>
         Creer votre annonce pour que les autres utilisateurs puissent vous
@@ -32,7 +32,7 @@ const CreerAnnonce = () => {
         </div>
         <button>Creer une annonce</button>
       </form>
-    </div>
+    </section>
   );
 };
 

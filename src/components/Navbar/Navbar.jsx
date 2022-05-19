@@ -10,11 +10,13 @@ const Navbar = () => {
   const { authState, setAuthState } = useContext(AuthContext);
   const navigate = useNavigate();
   console.log("authState.role :>> ", authState);
+  console.log("authState.image :>> ", authState.image);
   const logOut = () => {
     setAuthState({ ...authState, status: false });
     localStorage.clear();
     window.location.reload();
     navigate("/", { replace: true });
+    console.log("je veux voir authState :>> ", authState);
   };
   return (
     <nav className="navbar">
@@ -32,21 +34,23 @@ const Navbar = () => {
           ) : (
             ""
           )}
+          {authState.role === "admin" ? (
+            <nav>
+              <NavLink to="/gererannonces">Annonces</NavLink>
+              <NavLink to="/gererutilisateurs">Utilisateurs</NavLink>
+            </nav>
+          ) : (
+            ""
+          )}
 
           {/* <NavLink>Annonces</NavLink>
         <NavLink>Annonces</NavLink> */}
         </div>
       </div>
       <div className="nav-second-part">
-        {authState.role === "client" ? (
-          <div>
-            <NavLink to="/moncompte">
-              <img
-                className="profil-img-navbar"
-                src={authState.image}
-                alt="img-client"
-              />
-            </NavLink>
+        {authState.role === "client" || authState.role === "admin" ? (
+          <div className="user-login">
+            <NavLink to="/moncompte">Mon compte</NavLink>
 
             <div className="div-logout">
               <img src={logout} alt={logout} onClick={logOut} />

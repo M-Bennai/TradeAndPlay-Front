@@ -16,7 +16,7 @@ const GererUtilisateurs = () => {
       });
   }, []);
   return (
-    <div>
+    <section className="section-manage-client">
       <h1>Gérer les utilisateurs</h1>
       <p>Listes des utilisateurs </p>
       <div>
@@ -39,7 +39,7 @@ const GererUtilisateurs = () => {
           );
         })}
       </div>
-    </div>
+    </section>
   );
 };
 

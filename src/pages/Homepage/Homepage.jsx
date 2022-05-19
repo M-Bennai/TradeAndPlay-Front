@@ -30,10 +30,12 @@ const Homepage = () => {
         if (res.data.error) {
           setAuthState({ ...authState, status: false });
         } else {
+          console.log("res.data :>> ", res.data);
           localStorage.setItem("user", JSON.stringify(res.data));
           setAuthState({
             firstName: res.data.firstName,
             lastName: res.data.lastName,
+            email: res.data.email,
             role: res.data.role,
             image: res.data.image,
             id: res.data.id,

@@ -78,6 +78,12 @@ const MesAnnonces = () => {
                 >
                   supprimer mon article
                 </button>
+                <button
+                  className="update-btn"
+                  onClick={() => deleteArticle(id)}
+                >
+                  modifier mon article
+                </button>
               </div>
             </div>
           );

@@ -16,7 +16,7 @@ const schema = yup.object().shape({
 const url = `${process.env.REACT_APP_API_URL}/api/user/login`;
 
 const Login = () => {
-  const { setAuthState, authState } = useContext(AuthContext);
+  const { authState, setAuthState } = useContext(AuthContext);
   //const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -37,7 +37,12 @@ const Login = () => {
       localStorage.setItem("accessToken", res.data.token);
       //setLoading(false);
       setAuthState({ ...authState, status: true });
-      navigate("/", { replace: true });
+      if (authState.role === "admin") {
+        navigate("/admin", { replace: true });
+      } else {
+        navigate("/", { replace: true });
+      }
+
       setError(null);
     } catch (error) {
       console.log("error :>> ", error);

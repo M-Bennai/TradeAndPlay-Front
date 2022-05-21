@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
@@ -13,6 +13,7 @@ const SignIn = () => {
   const [city, setCity] = useState("");
   const [nickname, setNickname] = useState("");
   const [userImage, setUserImage] = useState("");
+  const [role, setRole] = useState("");
   const navigate = useNavigate();
   // const onSubmit = async (data) => {
   //   console.log("data :>> ", data);
@@ -31,6 +32,11 @@ const SignIn = () => {
   //     console.log("error :>> ", error.response.data.msg);
   //   }
   // };
+  useEffect(() => {
+    setRole("client");
+    console.log("i wanna see the role:>> ", role);
+  }, []);
+
   const addUserHandler = async (e) => {
     e.preventDefault();
 
@@ -43,6 +49,7 @@ const SignIn = () => {
     formData.append("city", city);
     formData.append("image", userImage);
     formData.append("nickname", nickname);
+    formData.append("role", role);
 
     console.log("formData :>> ", formData);
     await axios.post(url, formData);

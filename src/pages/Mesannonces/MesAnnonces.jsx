@@ -2,12 +2,12 @@ import React, { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import { AuthContext } from "../../auth/auth";
 import { useNavigate } from "react-router-dom";
-import { useParams } from "react-router-dom";
 
 const MesAnnonces = () => {
   const { authState } = useContext(AuthContext);
-  const [deleteStatus, setDeleteStatus] = useState(false);
+
   const id = authState.id;
+
   const [myArticles, setMyArticles] = useState([]);
   const navigate = useNavigate();
 
@@ -28,14 +28,14 @@ const MesAnnonces = () => {
 
   const deleteArticle = async (id) => {
     await axios
-      .delete(`${process.env.REACT_APP_API_URL}api/article/delete/${id}`, {
+      .delete(`${process.env.REACT_APP_API_URL}/api/article/delete/${id}`, {
         headers: {
           accessToken: localStorage.getItem("accessToken"),
         },
       })
       .then((res) => {
         console.log("res.data :>> ", res.data);
-        setDeleteStatus(true);
+        console.log(`l'elment a bien été suppri`);
       })
       .catch((err) => {
         console.log("err :>> ", err);
@@ -55,18 +55,18 @@ const MesAnnonces = () => {
         </div>{" "}
         {myArticles.map((el) => {
           const { id, title, image, ageRange } = el;
+          console.log("lets check the id " + id);
           const goToArticleDetails = (id) => {
             navigate(`/annonces/${id}`);
           };
           return (
-            <div
-              key={id}
-              onClick={() => goToArticleDetails(id)}
-              className="block-article"
-            >
+            <div key={id} className="block-article">
               <div className="article-img">
                 <figure>
-                  <img src={image} alt={title} />
+                  <img
+                    src={`${process.env.REACT_APP_API_URL}/${image}`}
+                    alt={title}
+                  />
                 </figure>
               </div>
               <div className="info-article">
@@ -83,6 +83,9 @@ const MesAnnonces = () => {
                   onClick={() => deleteArticle(id)}
                 >
                   modifier mon article
+                </button>
+                <button onClick={() => goToArticleDetails(id)}>
+                  Voir Annonce
                 </button>
               </div>
             </div>

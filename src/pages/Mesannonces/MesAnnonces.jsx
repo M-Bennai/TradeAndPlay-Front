@@ -63,10 +63,7 @@ const MesAnnonces = () => {
             <div key={id} className="block-article">
               <div className="article-img">
                 <figure>
-                  <img
-                    src={`${process.env.REACT_APP_API_URL}/${image}`}
-                    alt={title}
-                  />
+                  <img src={image} alt={title} />
                 </figure>
               </div>
               <div className="info-article">

@@ -2,6 +2,56 @@
   min-height: 100vh;
   display: flex;
 
+  background-color: white;
   flex-direction: column;
   align-items: center;
+  margin-top: 10vh;
+
+  h1 {
+    display: flex;
+    justify-content: left;
+    font-weight: 600;
+    font-size: 30px;
+    line-height: 45px;
+  }
+  .container-create-article {
+    max-width: 1280px;
+  }
+
+  .section-form {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    form {
+      display: flex;
+    }
+
+    .left-form {
+      display: flex;
+      flex-direction: column;
+    }
+    .right-form {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  .container-form {
+    justify-content: center;
+    display: flex;
+  }
+  .bottom-form {
+    margin-top: 1rem;
+    display: flex;
+
+    justify-content: center;
+    flex-direction: column;
+    input {
+      height: 120px;
+    }
+    button {
+      max-width: 150px;
+      height: 30px;
+    }
+  }
 }

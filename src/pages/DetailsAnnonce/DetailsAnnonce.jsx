@@ -5,6 +5,7 @@ import { UserInfosContext } from "../../context/UserInfosContext";
 import { format } from "date-fns";
 import Select from "react-select";
 import { AuthContext } from "../../auth/auth";
+import Modal from "react-modal";
 
 const DetailsAnnonce = () => {
   const { id } = useParams();
@@ -13,6 +14,7 @@ const DetailsAnnonce = () => {
   const [imageArticle, setImageArticle] = useState("");
   const [user, setUser] = useState("");
   const [selectToys, setSelectToys] = useState(false);
+  const [modalIsOpen, setIsOpen] = useState(false);
   const [userArticlesFromAPI, setUserArticlesFromAPI] = useState();
   const [articleToExchange, setArticleToExchange] = useState([
     {
@@ -20,6 +22,18 @@ const DetailsAnnonce = () => {
       id: "",
     },
   ]);
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function afterOpenModal() {
+    // references are now sync'd and can be accessed.
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
 
   const customStyles = {
     option: (provided, state) => ({
@@ -57,6 +71,21 @@ const DetailsAnnonce = () => {
       const transition = "opacity 300ms";
 
       return { ...provided, opacity, transition };
+    },
+  };
+
+  const customStyleModal = {
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
+      height: "auto",
+      width: "55rem",
+      padding: "0rem",
+      borderRadius: "10px",
     },
   };
 
@@ -111,28 +140,41 @@ const DetailsAnnonce = () => {
   //   // setValueId(obj.id);
   //   console.log("article to exchange id here:>> ", obj.id);
   // };
-  const handle = () => {
-    setArticleToExchange(true);
+  const handleArticleToExchange = () => {
+    const btn = document.getElementById("modal-exchange");
+    if (article.valueId === articleToExchange.valueId) {
+      btn.classList.add("btn-next-active");
+    } else {
+      btn.classList.remove("btn-next-active");
+    }
+    console.log("article. :>> ", article.valueId);
+    console.log("userArticlesFromAPI.valuedId :>> ", articleToExchange.valueId);
   };
 
   return (
     <section className="section-details">
+      <h1 className="title-article">{article.title}</h1>
       <div className="container-article-page">
         <figure className="article-img">
-          <img
-            src={`${process.env.REACT_APP_API_URL}/${imageArticle}`}
-            alt={article.title}
-          />
+          <img src={imageArticle} alt={article.title} />
         </figure>
         <div className="container-article-details">
-          <h1>{article.title}</h1>
+          <div className="container-user-details">
+            <img src={user.image} alt={user.firstName} />
+            <div className="user-details">
+              <p>Mise en ligne par </p>
+              <span className="user-name">{user.firstName}</span>
+            </div>
+            <div>
+              <span>{user.city}</span>
+            </div>
+          </div>
           <div className="article-tags">
             <span>ADD ARTICLE CATEGORY</span>
             <span className="span-condition">Etat : {article.condition}</span>
           </div>
           <div className="container-upper-details">
             <div className="article-details">
-              <p>Mise en ligne par {user.firstName}</p>
               <span>{article.ageRange}</span>
             </div>
             <div className="article-date">
@@ -144,40 +186,68 @@ const DetailsAnnonce = () => {
             <h3>Description</h3>
             <p>{article.description}</p>
           </div>
-          {articleToExchange.map((el, index) => {
-            const option =
-              userArticlesFromAPI &&
-              userArticlesFromAPI.map((el) => {
-                if (article.valueId === el.valueId) {
-                  console.log("lets compare with wesh " + article.valueId);
-                  console.log("wesh wesh" + el.valueId);
+          {authState.role === "client" ? (
+            <div>
+              {articleToExchange.map((el, index) => {
+                //const btn = document.getElementById("modal-exchange");
+                const option =
+                  userArticlesFromAPI &&
+                  userArticlesFromAPI.map((el) => {
+                    //if (article.valueId === el.valueId) {
+                    console.log("lets compare with wesh " + article.valueId);
+                    console.log("wesh wesh" + el.valueId);
 
-                  return {
-                    value: el.title,
-                    label: el.title + ` peut être échangé`,
-                    name: "articleToExchange",
-                    id: el.valueId,
-                  };
-                } else {
-                  return "";
-                }
-              });
-            return (
-              <div key={index}>
-                <Select
-                  className="select-toys"
-                  options={option}
-                  styles={customStyles}
-                  // onChange={(obj) => handleArticleToExchange(obj, index)}
+                    return {
+                      value: el.title,
+                      label: el.title + ` peut être échangé`,
+                      name: "articleToExchange",
+                      id: el.valueId,
+                    };
 
-                  placeholder="Mes jouets"
-                  name="articleToExchange"
-                  id="select-toys"
-                />
-              </div>
-            );
-          })}
-          <button className="button-inactive" id="modal-exchange">
+                    //} else {
+                    //return btn.classList.remove("btn-next-active");
+                    //}
+                  });
+
+                return (
+                  <div key={index}>
+                    <Select
+                      className="select-toys"
+                      options={option}
+                      styles={customStyles}
+                      // onChange={(obj) => handleArticleToExchange(obj, index)}
+                      onChange={() => handleArticleToExchange()}
+                      placeholder="Mes jouets"
+                      name="articleToExchange"
+                      id="select-toys"
+                    />
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            <p>
+              Il faut un compte et un objet de la meme valeur pour pouvoir
+              proposer un échange
+            </p>
+          )}
+          <Modal
+            isOpen={modalIsOpen}
+            onAfterOpen={afterOpenModal}
+            onRequestClose={closeModal}
+            style={customStyleModal}
+            contentLabel="Modal"
+          >
+            <p>{user.email}</p>
+            <input></input>
+            <button></button>
+          </Modal>
+
+          <button
+            className="btn-exchange"
+            id="modal-exchange"
+            onClick={openModal}
+          >
             Proposer un échange
           </button>
         </div>

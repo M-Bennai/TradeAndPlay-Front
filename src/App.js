@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import Navbar from "./components/Navbar/Navbar";
 import Homepage from "./pages/Homepage/Homepage";
 import Annonces from "./pages/Annonces/Annonces";
@@ -6,7 +7,7 @@ import Login from "../src/pages/Login/Login";
 import { Routes, Route } from "react-router-dom";
 import SignIn from "./pages/SignIn/SignIn";
 import { AuthContext } from "./auth/auth";
-import { useEffect, useState } from "react";
+
 import Footer from "./components/Footer/Footer";
 import UserInfosContextProvider from "./context/UserInfosContext";
 import DetailsAnnonce from "./pages/DetailsAnnonce/DetailsAnnonce";

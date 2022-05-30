@@ -37,10 +37,7 @@ const Annonces = () => {
                 className="block-article"
               >
                 <figure>
-                  <img
-                    src={`${process.env.REACT_APP_API_URL}/${image}`}
-                    alt={title}
-                  />
+                  <img src={image} alt={title} />
                 </figure>
                 <div className="info-article">
                   <h3>{title}</h3>

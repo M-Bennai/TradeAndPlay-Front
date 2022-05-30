@@ -3,12 +3,16 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  padding-left: 2rem;
-  padding-right: 2rem;
-  background-color: #d8e8fa;
+  justify-content: center;
+  padding: 18px 30px;
+  border-bottom: 0.1px solid #d9d9d9;
+
+  .container-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 1280px;
+  }
 
   .nav-first-part {
     display: flex;
@@ -22,23 +26,40 @@
     align-items: center;
 
     span {
-      font-style: normal;
       font-weight: 700;
       font-size: 24px;
       line-height: 36px;
-      color: #80ca7a;
+      /* identical to box height */
+      margin-right: 10px;
+
+      background: linear-gradient(180deg, #7cb5f0 0%, #2c95f1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-fill-color: transparent;
     }
   }
 
   .nav-links {
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding-left: 20px;
-    width: 300px;
-    justify-content: space-evenly;
+    flex-direction: row !important;
+    align-items: center !important;
+
     a {
-      color: black;
+      padding: 0 1rem;
+
+      font-style: normal;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 24px;
+
+      /* identical to box height */
+
+      color: #cac8d4;
+
+      &:hover {
+        color: black;
+      }
     }
   }
 
@@ -59,11 +80,131 @@
   .user-login {
     display: flex;
     flex-direction: row;
-    width: 200px;
-    justify-content: space-evenly;
+    align-items: center;
+
+    img {
+      width: 40px;
+      height: 40px;
+      border-radius: 11px;
+    }
+  }
+
+  .profil {
+    display: flex;
+    align-items: center;
+    background-color: #f8f8f8;
+    border-radius: 5px;
+    padding: 5px;
+    img {
+      object-fit: cover;
+    }
+    .div-name-email {
+      align-items: center;
+      padding-left: 5px;
+      font-size: 12px;
+      line-height: 18px;
+      p {
+        font-weight: 500;
+      }
+
+      span {
+      }
+    }
+  }
+
+  .div-myaccount {
+    display: flex;
+    margin-left: 21px;
+    img {
+      width: 24px;
+    }
+  }
+  .div-logout {
+    display: flex;
+    margin-left: 18px;
+    img {
+      width: 24px;
+    }
   }
 
   a {
+    display: flex;
+
     text-decoration: none;
+  }
+
+  .navbar__burger {
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: none;
+    color: inherit;
+    display: none;
+  }
+
+  @media screen and (max-width: 1100px) {
+    .nav-links {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: fixed;
+      visibility: hidden;
+      right: -100vw;
+
+      bottom: 0;
+      height: 100vh;
+      padding: 2rem;
+      background-color: white;
+    }
+
+    .show-nav .nav-links {
+      width: 100vw !important;
+      right: 0 !important;
+      visibility: visible;
+    }
+    .navbar__link {
+      display: block;
+      padding: 1.5rem;
+      font-size: 5vw;
+    }
+
+    .navbar__burger {
+      display: block;
+
+      top: 1rem;
+      right: 1rem;
+    }
+
+    .navbar__burger:hover {
+      cursor: pointer;
+    }
+    .burger-bar,
+    .burger-bar::before,
+    .burger-bar::after {
+      display: block;
+      width: 40px;
+      height: 3px;
+      position: relative;
+      border-radius: 3px;
+      background-color: #2c95f1;
+    }
+    .burger-bar::before,
+    .burger-bar::after {
+      content: "";
+      position: absolute;
+      left: 0;
+    }
+    .burger-bar::before {
+      transform: translateY(-12px);
+    }
+
+    .burger-bar::after {
+      transform: translateY(12px);
+    }
+
+    .show-nav,
+    .burger-bar::before {
+      transform: rotate(45deg);
+    }
   }
 }

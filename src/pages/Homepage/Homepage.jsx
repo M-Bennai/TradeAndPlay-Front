@@ -15,7 +15,7 @@ import { UserInfosContext } from "../../context/UserInfosContext";
 
 const Homepage = () => {
   const urlAuth = `${process.env.REACT_APP_API_URL}/api/user/auth`;
-  //  const { setClientName } = useContext(UserInfosContext);
+  //const { setClientName, setImage, setFirstName, setLastName, setEmail } = useContext(UserInfosContext);
   const { authState, setAuthState } = useContext(AuthContext);
 
   useEffect(() => {
@@ -31,6 +31,7 @@ const Homepage = () => {
           setAuthState({ ...authState, status: false });
         } else {
           console.log("res.data :>> ", res.data);
+          console.log("res.data.image :>> ", res.data.image);
           localStorage.setItem("user", JSON.stringify(res.data));
           setAuthState({
             firstName: res.data.firstName,

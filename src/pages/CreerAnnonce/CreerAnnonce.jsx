@@ -15,10 +15,11 @@ const CreerAnnonce = () => {
   const { authState } = useContext(AuthContext);
   const [categoryFromAPI, setCategoryFromAPI] = useState();
   const [valueFromAPI, setValueFromAPI] = useState();
+  const [ageRangeFromAPI, setAgeRangeFromAPI] = useState();
   const [articleImage, setArticleImage] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [ageRange, setAgeRange] = useState("");
+  const [ageRangeId, setAgeRangeId] = useState("");
   const [userId, setUserId] = useState("");
   const [condition, setCondition] = useState("");
   const [categoryId, setCategoryId] = useState("");
@@ -33,6 +34,13 @@ const CreerAnnonce = () => {
   const [category, setCategory] = useState([
     {
       name: "",
+      id: "",
+    },
+  ]);
+
+  const [ageRange, setAgeRange] = useState([
+    {
+      range: "",
       id: "",
     },
   ]);
@@ -76,7 +84,7 @@ const CreerAnnonce = () => {
     formData.append("valueId", valueId);
     formData.append("description", description);
     formData.append("categoryId", categoryId);
-    formData.append("ageRange", ageRange);
+    formData.append("ageRangeId", ageRangeId);
     formData.append("condition", condition);
     formData.append("userId", userId);
 
@@ -89,6 +97,7 @@ const CreerAnnonce = () => {
       .get(`${process.env.REACT_APP_API_URL}/api/category/all`)
       .then((res) => {
         setCategoryFromAPI(res.data);
+        console.log("category from api:>> ", res.data);
       })
       .catch((err) => {
         console.log("err :>> ", err);
@@ -100,7 +109,19 @@ const CreerAnnonce = () => {
       .get(`${process.env.REACT_APP_API_URL}/api/value/all`)
       .then((res) => {
         setValueFromAPI(res.data.allValues);
-        console.log("je veux voir ça :>> ", res.data.allValues);
+        console.log("jvalues from api:>> ", res.data.allValues);
+      })
+      .catch((err) => {
+        console.log("err :>> ", err);
+      });
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/api/agerange/all`)
+      .then((res) => {
+        setAgeRangeFromAPI(res.data);
+        console.log("jage range from api:>> ", res.data);
       })
       .catch((err) => {
         console.log("err :>> ", err);
@@ -170,110 +191,151 @@ const CreerAnnonce = () => {
     console.log("VAlueIDDDDD:>> ", obj.id);
   };
 
+  const handleAgeRange = (obj, index) => {
+    console.log("obj :>> ", obj);
+    const { range, value, id } = obj;
+    const list = [...ageRange];
+    list[index][range] = value;
+    // list[index]["id"] = id;
+    console.log('list[index]["id"] = id; :>> ', (list[index]["id"] = id));
+    setAgeRange(list);
+    setAgeRangeId(obj.id);
+    console.log("age range id>> ", obj.id);
+  };
+
   return (
     <section className="section-creer-annonce">
-      <h1>Creer une annonce</h1>
-      <p>
-        Creer votre annonce pour que les autres utilisateurs puissent vous
-        proposer un échange. Cela vous permet aussi de proposer un échange avec
-        un jouet de même catégorie.
-      </p>
+      <div className="container-create-article">
+        <h1>Creer une annonce</h1>
+        <p>
+          Creer votre annonce pour que les autres utilisateurs puissent vous
+          proposer un échange. Cela vous permet aussi de proposer un échange
+          avec un jouet de même catégorie.
+        </p>
+        <div className="container-form">
+          <form
+            onSubmit={addArticleHandler}
+            method="POST"
+            encType="multipart/form-data"
+          >
+            <section className="section-form">
+              <div className="left-form">
+                <label htmlFor="title">Nom du jouet</label>
+                <input
+                  className="input"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                ></input>
+                {Value.map((el, index) => {
+                  const options =
+                    valueFromAPI &&
+                    valueFromAPI.map((el) => {
+                      return {
+                        value: el.name,
+                        label: el.name,
+                        name: "value",
+                        id: el.id,
+                      };
+                    });
+                  return (
+                    <div key={index}>
+                      <label htmlFor="value">Valeur</label>
+                      <Select
+                        className="select-value"
+                        options={options}
+                        styles={customStyles}
+                        placeholder="Valeur"
+                        onChange={(obj) => handleValue(obj, index)}
+                        //onChange={(e) => setValueId(e.target.value.id)}
+                        name="valueId"
+                      />
+                    </div>
+                  );
+                })}
 
-      <div>
-        <form
-          onSubmit={addArticleHandler}
-          method="POST"
-          encType="multipart/form-data"
-        >
-          <label htmlFor="title">Nom du jouet</label>
-          <input
-            className="input"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          ></input>
-          <label htmlFor="ageRange">Tranche d'âge</label>
-          <input
-            className="input"
-            value={ageRange}
-            onChange={(e) => setAgeRange(e.target.value)}
-          ></input>
-          {Value.map((el, index) => {
-            const options =
-              valueFromAPI &&
-              valueFromAPI.map((el) => {
-                return {
-                  value: el.name,
-                  label: el.name,
-                  name: "value",
-                  id: el.id,
-                };
-              });
-            return (
-              <div key={index}>
-                <label htmlFor="value">Valeur</label>
-                <Select
-                  className="select-value"
-                  options={options}
-                  styles={customStyles}
-                  placeholder="Valeur"
-                  onChange={(obj) => handleValue(obj, index)}
-                  //onChange={(e) => setValueId(e.target.value.id)}
-                  name="valueId"
+                {category.map((el, index) => {
+                  const option =
+                    categoryFromAPI &&
+                    categoryFromAPI.map((el) => {
+                      return {
+                        value: el.name,
+                        label: el.name,
+                        name: "category",
+                        id: el.id,
+                      };
+                    });
+                  return (
+                    <div key={index}>
+                      <label htmlFor="condition">Catégorie</label>
+                      <Select
+                        className="select-type"
+                        options={option}
+                        styles={customStyles}
+                        placeholder="Categorie"
+                        onChange={(obj) => handleCategory(obj, index)}
+                        name="categoryId"
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="right-form">
+                {ageRange.map((el, index) => {
+                  const options =
+                    ageRangeFromAPI &&
+                    ageRangeFromAPI.map((el) => {
+                      return {
+                        value: el.range,
+                        label: el.range,
+                        name: "ageRange",
+                        id: el.id,
+                      };
+                    });
+                  return (
+                    <div key={index}>
+                      <label htmlFor="ageRange">Tranche d'âge</label>
+                      <Select
+                        className="select-agerange"
+                        options={options}
+                        styles={customStyles}
+                        placeholder="Tranche d'âge"
+                        onChange={(obj) => handleAgeRange(obj, index)}
+                        name="ageRangeId"
+                      />
+                    </div>
+                  );
+                })}
+
+                <label htmlFor="condition">Etat</label>
+                <input
+                  className="input"
+                  value={condition}
+                  onChange={(e) => setCondition(e.target.value)}
+                ></input>
+
+                <label htmlFor="image">Image</label>
+                <input
+                  id="choose-file"
+                  className="custom-file-input"
+                  type="file"
+                  name="image"
+                  onChange={(e) => setArticleImage(e.target.files[0])}
+                  accept="image/*"
                 />
               </div>
-            );
-          })}
+            </section>
+            <div className="bottom-form">
+              <label htmlFor="description">Description</label>
+              <input
+                className="description-annonce"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              ></input>
 
-          <label htmlFor="condition">Etat</label>
-          <input
-            className="input"
-            value={condition}
-            onChange={(e) => setCondition(e.target.value)}
-          ></input>
-          {category.map((el, index) => {
-            const option =
-              categoryFromAPI &&
-              categoryFromAPI.map((el) => {
-                return {
-                  value: el.name,
-                  label: el.name,
-                  name: "category",
-                  id: el.id,
-                };
-              });
-            return (
-              <div key={index}>
-                <label htmlFor="condition">Catégorie</label>
-                <Select
-                  className="select-type"
-                  options={option}
-                  styles={customStyles}
-                  placeholder="Categorie"
-                  onChange={(obj) => handleCategory(obj, index)}
-                  name="categoryId"
-                />
-              </div>
-            );
-          })}
-          <label htmlFor="image">Image</label>
-          <input
-            id="choose-file"
-            className="custom-file-input"
-            type="file"
-            name="image"
-            onChange={(e) => setArticleImage(e.target.files[0])}
-            accept="image/*"
-          />
-
-          <label htmlFor="description">Description</label>
-          <input
-            className="description-annonce"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          ></input>
-
-          <button type="submit">Creer une annonce</button>
-        </form>
+              <button type="submit">Creer une annonce</button>
+            </div>
+          </form>
+        </div>
       </div>
     </section>
   );

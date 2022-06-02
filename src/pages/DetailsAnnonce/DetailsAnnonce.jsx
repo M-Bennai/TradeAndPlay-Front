@@ -1,5 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import axios from "axios";
+import emailjs from "@emailjs/browser";
 import { useParams } from "react-router-dom";
 import { UserInfosContext } from "../../context/UserInfosContext";
 import { format } from "date-fns";
@@ -15,6 +16,7 @@ const DetailsAnnonce = () => {
   const [user, setUser] = useState("");
   const [selectToys, setSelectToys] = useState(false);
   const [modalIsOpen, setIsOpen] = useState(false);
+  //const [showButton, setShowButton] = useState(true);
   const [userArticlesFromAPI, setUserArticlesFromAPI] = useState();
   const [articleToExchange, setArticleToExchange] = useState([
     {
@@ -89,17 +91,17 @@ const DetailsAnnonce = () => {
     },
   };
 
-  useEffect(() => {
-    const selectToys = document.getElementById("select-toys");
-    const btn = document.getElementById("modal-exchange");
-    if (!selectToys === "exchange") {
-      const btn = document.getElementById("modal-exchange");
+  // useEffect(() => {
+  //   const selectToys = document.getElementById("select-toys");
+  //   const btn = document.getElementById("modal-exchange");
+  //   if (!selectToys === "exchange") {
+  //     const btn = document.getElementById("modal-exchange");
 
-      btn.classList.remove("btn-next-active");
-    } else {
-      btn.classList.add("btn-next-active");
-    }
-  }, [selectToys]);
+  //     btn.classList.remove("btn-next-active");
+  //   } else {
+  //     btn.classList.add("btn-next-active");
+  //   }
+  // }, [selectToys]);
 
   useEffect(() => {
     axios
@@ -140,15 +142,42 @@ const DetailsAnnonce = () => {
   //   // setValueId(obj.id);
   //   console.log("article to exchange id here:>> ", obj.id);
   // };
-  const handleArticleToExchange = () => {
+  const handleArticleToExchange = (obj) => {
+    console.log("yo :>> ");
     const btn = document.getElementById("modal-exchange");
-    if (article.valueId === articleToExchange.valueId) {
+    if (article.valueId === obj.id) {
       btn.classList.add("btn-next-active");
     } else {
       btn.classList.remove("btn-next-active");
     }
     console.log("article. :>> ", article.valueId);
     console.log("userArticlesFromAPI.valuedId :>> ", articleToExchange.valueId);
+    // console.log("voir option.id:>> ", option.id);
+    // console.log("option :>> ", option);
+    //console.log("index :>> ", index);
+    console.log("obj :>> ", obj.id);
+  };
+
+  const form = useRef();
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs
+      .sendForm(
+        "service_m4cvua9",
+        "template_3yzmg9n",
+        form.current,
+        "mb49EuwWXV5NSDRP-"
+      )
+      .then(
+        (result) => {
+          console.log(result.text);
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
   };
 
   return (
@@ -190,13 +219,18 @@ const DetailsAnnonce = () => {
             <div>
               {articleToExchange.map((el, index) => {
                 //const btn = document.getElementById("modal-exchange");
+                console.log("jveux voir el", el);
+                let valueId;
                 const option =
                   userArticlesFromAPI &&
                   userArticlesFromAPI.map((el) => {
                     //if (article.valueId === el.valueId) {
                     console.log("lets compare with wesh " + article.valueId);
                     console.log("wesh wesh" + el.valueId);
-
+                    console.log("ici jveux voir l'id -->>", el.id);
+                    console.log(el);
+                    valueId = el.valueId;
+                    console.log(valueId);
                     return {
                       value: el.title,
                       label: el.title + ` peut être échangé`,
@@ -216,7 +250,7 @@ const DetailsAnnonce = () => {
                       options={option}
                       styles={customStyles}
                       // onChange={(obj) => handleArticleToExchange(obj, index)}
-                      onChange={() => handleArticleToExchange()}
+                      onChange={(obj) => handleArticleToExchange(obj)}
                       placeholder="Mes jouets"
                       name="articleToExchange"
                       id="select-toys"
@@ -239,18 +273,27 @@ const DetailsAnnonce = () => {
             contentLabel="Modal"
           >
             <p>{user.email}</p>
-            <input></input>
-            <button></button>
-          </Modal>
 
-          <button
-            className="btn-exchange"
-            id="modal-exchange"
-            onClick={openModal}
-          >
-            Proposer un échange
-          </button>
+            <form ref={form} onSubmit={sendEmail}>
+              <label>Name{authState.firstName}</label>
+              <input type="text" name="name" value={authState.firstName} />
+              <label>Email{user.email}</label>
+              <input type="email" name="user_email" /*value={user.email}*/ />
+              <label>Message</label>
+              <textarea name="message" />
+              <input type="submit" value="Send" />
+            </form>
+          </Modal>
         </div>
+
+        <button
+          className="btn-exchange"
+          id="modal-exchange"
+          onClick={openModal}
+          disabled
+        >
+          Proposer un échange
+        </button>
       </div>
     </section>
   );

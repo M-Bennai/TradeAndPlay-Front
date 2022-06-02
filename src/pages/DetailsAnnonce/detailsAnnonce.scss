@@ -82,11 +82,12 @@
   .container-article-page {
     display: flex;
     flex-direction: row;
-
+    border: 2px solid blue;
     .article-img {
-      width: 950px;
+      width: 500px;
       height: 500px;
       border-radius: 5px;
+      border: 2px solid red;
       img {
         object-fit: cover;
         width: 100%;

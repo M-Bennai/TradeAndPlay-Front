@@ -2,13 +2,14 @@ import React from "react";
 import instagram from "../../assets/instagram.svg";
 import twitter from "../../assets/twitter.svg";
 import linkedin from "../../assets/linkedin.svg";
+import logo from "../../assets/logo.svg";
 
 const Footer = () => {
   return (
     <section className="section-footer">
       <div className="footer-title-media">
         <div>
-          <h1>Trade and Play</h1>
+          <img src={logo} alt="logo" />
         </div>
         <div className="social-media">
           <img src={instagram} alt={instagram} />
@@ -16,7 +17,7 @@ const Footer = () => {
           <img src={linkedin} alt={linkedin} />
         </div>
       </div>
-      <ul>
+      <ul className="menu-footer">
         <li>mentions légales</li>
         <li>conditions générales</li>
         <li></li>

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import box from "../../assets/box.svg";
+import header from "../../assets/headerT&P.svg";
 import wave from "../../assets/homepage-waves.svg";
 import wavedown from "../../assets/down-banner.svg";
 import upperblue from "../../assets/upper-blue.svg";
@@ -56,9 +56,13 @@ const Homepage = () => {
             Aider les parents à désencombrer, donner de la joie et sauver la
             planète...
           </p>
+          <div>
+            <button>Voir les annonces</button>
+            <button className="btn-create-acc">Creer un compte</button>
+          </div>
         </div>
         <div className="banner-right">
-          <img src={box} alt={box} />
+          <img src={header} alt={header} />
         </div>
       </div>
       <div className="homepage-2nd-screen">
@@ -88,8 +92,8 @@ const Homepage = () => {
                 les jeter, les recycler, les donner ?
               </p>
             </article>
-            <aside>
-              <img src={toysbox} alt={toysbox} />
+            <aside className="div-month">
+              <img className="img-toys" src={toysbox} alt={toysbox} />
             </aside>
           </div>
           <div className="description-block">
@@ -123,25 +127,37 @@ const Homepage = () => {
         </div>
       </div>
       <div className="homepage-3rd-screen">
-        <img src={upperblue} alt={upperblue} />
+        <img
+          src={upperblue}
+          alt={upperblue}
+          style={{ bottomOutline: "1px solid #77b1ef" }}
+        />
         <div className="homepage-description-third">
           <div className="description-block">
-            <h2>Consulter les annonces et proposez un échange</h2>
-            <h3>
-              Les jouets sont trié par catégorie d’âge et de prix afin de
-              proposer un échange simple et équitable.
-            </h3>
-            <p>
-              Si un jouet vous intéresse et que vous avez un jouet de la même
-              catégorie a échanger, vous pouvez proposer un échange.
-            </p>
+            <div className="rule-1">
+              <span>1.</span>
+              <p>Je crée mon compte et mes annonces.</p>
+            </div>
+            <div className="rule-2">
+              <span>2.</span>
+              <p>
+                Je propose ou reçois une demande d’échange d’un jouet de la même
+                catégorie
+              </p>
+            </div>
+            <div className="rule-3">
+              <span>3.</span>
+              <p>
+                Je donne rendez-vous à la personne pour procedez a l’échange
+              </p>
+            </div>
           </div>
         </div>
         <img src={downblue} alt={downblue} />
       </div>
       <div className="homepage-4th-screen">
+        <h4>Creer une annonce</h4>
         <div className="description-block">
-          <h4>Creer une annonce</h4>
           <p>
             Pour être accepté, ton objet doit être en bon état. Choisis donc
             avec soin quels objets tu souhaites échanger, et suit les étapes du
@@ -159,6 +175,8 @@ const Homepage = () => {
             N’échange pas un objet que tu ne souhaiterais pas toi-même recevoir
             en cadeau.
           </p>
+        </div>
+        <div className="img-create-article">
           <img src={child} alt={child} />
         </div>
       </div>

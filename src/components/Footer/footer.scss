@@ -1,11 +1,23 @@
 .section-footer {
   background: $lightblue;
   height: 300px;
+
+  .div-upper-footer {
+    img {
+      background-color: white;
+
+      width: 100%;
+    }
+  }
+  .container-footer {
+    background: $lightblue;
+  }
   .footer-title-media {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding: 2rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
 
     h1 {
       font-weight: 800;
@@ -21,11 +33,13 @@
     }
 
     .social-media {
+      padding-top: 1rem;
       width: 2rem;
       justify-content: space-between;
     }
   }
   .menu-footer {
     padding-left: 2rem;
+    padding-bottom: 1rem;
   }
 }

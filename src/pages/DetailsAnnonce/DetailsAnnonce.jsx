@@ -143,7 +143,6 @@ const DetailsAnnonce = () => {
   //   console.log("article to exchange id here:>> ", obj.id);
   // };
   const handleArticleToExchange = (obj) => {
-    console.log("yo :>> ");
     const btn = document.getElementById("modal-exchange");
     if (article.valueId === obj.id) {
       btn.classList.add("btn-next-active");

@@ -176,7 +176,7 @@ const CreerAnnonce = () => {
     console.log('list[index]["id"] = id; :>> ', (list[index]["id"] = id));
     setCategory(list);
     setCategoryId(obj.id);
-    console.log("ID?????category :>> ", obj.id);
+    console.log("ID???category :>> ", obj.id);
   };
 
   const handleValue = (obj, index) => {

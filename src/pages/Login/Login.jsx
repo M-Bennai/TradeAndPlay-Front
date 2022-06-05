@@ -7,11 +7,14 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
 
 const schema = yup.object().shape({
-  email: yup.string().email().required("This field is required"),
+  email: yup
+    .string()
+    .email("email invalide")
+    .required("Ce champ est obligatoire"),
   password: yup
     .string()
     .min(3, "Please fill in the password")
-    .required("This field is required"),
+    .required("Ce champ est obligatoire"),
 });
 const url = `${process.env.REACT_APP_API_URL}/api/user/login`;
 
@@ -83,6 +86,9 @@ const Login = () => {
             name="email"
             placeholder="Email"
           ></input>
+          <span className="warning-msg">
+            {errors.email && errors.email.message}
+          </span>
           <label>Mot de passe</label>
           <input
             className="input"
@@ -93,6 +99,9 @@ const Login = () => {
             name="password"
             placeholder="Password"
           ></input>
+          <span className="warning-msg">
+            {errors.password && errors.password.message}
+          </span>
           <button className="button" type="submit">
             Connexion
           </button>

@@ -1,8 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
 
 import axios from "axios";
 const url = `${process.env.REACT_APP_API_URL}/api/user/register`;
+
+const schema = yup.object().shape({
+  email: yup.string().email().required("Ce champs est requis"),
+  password: yup
+    .string()
+    .min(6, "Le mot de passe doit contenir au moins 6 caracteres")
+    .required("Ce champs est requis"),
+});
+
 const SignIn = () => {
   const [error, setError] = useState(null);
   const [firstName, setFirstName] = useState("");
@@ -15,23 +27,15 @@ const SignIn = () => {
   const [userImage, setUserImage] = useState("");
   const [role, setRole] = useState("");
   const navigate = useNavigate();
-  // const onSubmit = async (data) => {
-  //   console.log("data :>> ", data);
-  //   //setLoading(true);
-  //   try {
-  //     const res = await axios.post(url, data);
-  //     localStorage.setItem("accessToken", res.data);
-  //     //setLoading(false);
 
-  //     navigate("/connexion", { replace: true });
-  //     setError(null);
-  //   } catch (error) {
-  //     console.log("error :>> ", error);
-  //     setError(error.response.data.msg);
-  //     //setLoading(false);
-  //     console.log("error :>> ", error.response.data.msg);
-  //   }
-  // };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
   useEffect(() => {
     setRole("client");
     console.log("i wanna see the role:>> ", role);
@@ -64,7 +68,7 @@ const SignIn = () => {
         échanges !
       </h2>
       <form
-        onSubmit={addUserHandler}
+        onSubmit={handleSubmit(addUserHandler)}
         method="POST"
         encType="multipart/form-data"
       >
@@ -88,12 +92,18 @@ const SignIn = () => {
         <label>Email</label>
         <input
           className="input"
+          {...register("email", {
+            required: "Required",
+          })}
           type="email"
           name="email"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         ></input>
+        <span className="warning-email">
+          {errors.email && errors.email.message}
+        </span>
         <label>Mot de passe</label>
         <input
           className="input"

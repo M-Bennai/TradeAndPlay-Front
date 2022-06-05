@@ -9,10 +9,23 @@ import { AuthContext } from "../../auth/auth";
 
 const url = `${process.env.REACT_APP_API_URL}/api/article/create`;
 const schema = yup.object().shape({
-  title: yup.string().required("Ce champ est requis"),
+  title: yup
+    .string()
+    .min(3, "Le titre doit contenir au moins 3 caracteres")
+    .max(15, "Le titre ne doit pas contenir plus de 15 caracteres")
+    .required("Ce champ est obligatoire"),
+  categoryId: yup.string().required("Ce champ est obligatoire"),
+  valueId: yup.string().required("Ce champ est obligatoire"),
+  ageRangeId: yup.string().required("Ce champ est obligatoire"),
+  condition: yup
+    .string()
+    .max(15, "etat du jouet trop long")
+    .required("Ce champ est obligatoire"),
+  description: yup.string().max(150, "votre description est trop longue"),
 });
 const CreerAnnonce = () => {
   const { authState } = useContext(AuthContext);
+  const [error, setError] = useState(null);
   const [categoryFromAPI, setCategoryFromAPI] = useState();
   const [valueFromAPI, setValueFromAPI] = useState();
   const [ageRangeFromAPI, setAgeRangeFromAPI] = useState();
@@ -147,7 +160,7 @@ const CreerAnnonce = () => {
 
     indicatorsContainer: () => ({
       borderLeft: "1px solid #f1f1f1",
-      padding: "10px",
+      // padding: "10px",
       marginRight: "2px",
       cursor: "pointer",
     }),
@@ -155,8 +168,11 @@ const CreerAnnonce = () => {
     control: () => ({
       // none of react-select's styles are passed to <Control />
       display: "flex",
-      width: 312,
-      height: 57,
+      width: 236,
+      marginTop: "0.5rem",
+      height: 40,
+      border: "1px solid #DADBDC",
+      borderRadius: 10,
       backgroundColor: "white",
     }),
     singleValue: (provided, state) => {
@@ -209,12 +225,13 @@ const CreerAnnonce = () => {
         <h1>Creer une annonce</h1>
         <p>
           Creer votre annonce pour que les autres utilisateurs puissent vous
-          proposer un échange. Cela vous permet aussi de proposer un échange
-          avec un jouet de même catégorie.
+          proposer un échange. <br />
+          Cela vous permet aussi de proposer un échange avec un jouet de même
+          catégorie.
         </p>
         <div className="container-form">
           <form
-            onSubmit={addArticleHandler}
+            onSubmit={handleSubmit(addArticleHandler)}
             method="POST"
             encType="multipart/form-data"
           >
@@ -223,9 +240,15 @@ const CreerAnnonce = () => {
                 <label htmlFor="title">Nom du jouet</label>
                 <input
                   className="input"
+                  {...register("title", {
+                    required: "Required",
+                  })}
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                 ></input>
+                <span className="warning-msg">
+                  {errors.title && errors.title.message}
+                </span>
                 {Value.map((el, index) => {
                   const options =
                     valueFromAPI &&
@@ -238,17 +261,22 @@ const CreerAnnonce = () => {
                       };
                     });
                   return (
-                    <div key={index}>
+                    <div className="select-container" key={index}>
                       <label htmlFor="value">Valeur</label>
                       <Select
                         className="select-value"
+                        {...register("valueId", {
+                          required: "Required",
+                        })}
                         options={options}
                         styles={customStyles}
                         placeholder="Valeur"
                         onChange={(obj) => handleValue(obj, index)}
-                        //onChange={(e) => setValueId(e.target.value.id)}
                         name="valueId"
                       />
+                      <span className="warning-msg">
+                        {errors.valueId && errors.valueId.message}
+                      </span>
                     </div>
                   );
                 })}
@@ -265,21 +293,50 @@ const CreerAnnonce = () => {
                       };
                     });
                   return (
-                    <div key={index}>
+                    <div className="select-container" key={index}>
                       <label htmlFor="condition">Catégorie</label>
                       <Select
                         className="select-type"
+                        {...register("categoryId", {
+                          required: "Required",
+                        })}
                         options={option}
                         styles={customStyles}
                         placeholder="Categorie"
                         onChange={(obj) => handleCategory(obj, index)}
                         name="categoryId"
                       />
+                      <span className="warning-msg">
+                        {errors.categoryId && errors.categoryId.message}
+                      </span>
                     </div>
                   );
                 })}
               </div>
               <div className="right-form">
+                <label htmlFor="image">Image</label>
+                <input
+                  id="choose-file"
+                  className="custom-image-input"
+                  type="file"
+                  name="image"
+                  onChange={(e) => setArticleImage(e.target.files[0])}
+                  accept="image/*"
+                />
+
+                <label htmlFor="condition">Etat</label>
+                <input
+                  className="input"
+                  {...register("condition", {
+                    required: "Required",
+                  })}
+                  value={condition}
+                  onChange={(e) => setCondition(e.target.value)}
+                ></input>
+                <span className="warning-msg">
+                  {errors.condition && errors.condition.message}
+                </span>
+
                 {ageRange.map((el, index) => {
                   const options =
                     ageRangeFromAPI &&
@@ -292,47 +349,45 @@ const CreerAnnonce = () => {
                       };
                     });
                   return (
-                    <div key={index}>
+                    <div className="select-container" key={index}>
                       <label htmlFor="ageRange">Tranche d'âge</label>
                       <Select
                         className="select-agerange"
+                        {...register("ageRangeId", {
+                          required: "Required",
+                        })}
                         options={options}
                         styles={customStyles}
                         placeholder="Tranche d'âge"
                         onChange={(obj) => handleAgeRange(obj, index)}
                         name="ageRangeId"
                       />
+                      <span className="warning-msg">
+                        {errors.ageRangeId && errors.ageRangeId.message}
+                      </span>
                     </div>
                   );
                 })}
-
-                <label htmlFor="condition">Etat</label>
-                <input
-                  className="input"
-                  value={condition}
-                  onChange={(e) => setCondition(e.target.value)}
-                ></input>
-
-                <label htmlFor="image">Image</label>
-                <input
-                  id="choose-file"
-                  className="custom-file-input"
-                  type="file"
-                  name="image"
-                  onChange={(e) => setArticleImage(e.target.files[0])}
-                  accept="image/*"
-                />
               </div>
             </section>
             <div className="bottom-form">
               <label htmlFor="description">Description</label>
               <input
                 className="description-annonce"
+                {...register("description", {
+                  required: "Required",
+                })}
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               ></input>
-
-              <button type="submit">Creer une annonce</button>
+              <span className="warning-msg">
+                {errors.description && errors.description.message}
+              </span>
+              <div className="div-btn-submit">
+                <button className="button" type="submit">
+                  Creer une annonce
+                </button>
+              </div>
             </div>
           </form>
         </div>

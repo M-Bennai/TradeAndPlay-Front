@@ -18,10 +18,21 @@
     max-width: 1280px;
   }
 
+  .select-container {
+    margin-top: 1rem;
+  }
+  label {
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+  }
   .section-form {
     display: flex;
-    justify-content: center;
+    width: 33rem;
     flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 2rem;
+
     form {
       display: flex;
     }
@@ -34,6 +45,12 @@
       display: flex;
       flex-direction: column;
     }
+  }
+
+  .description-annonce {
+    border: 1px solid #dadbdc;
+    border-radius: 10px;
+    margin-top: 0.5rem;
   }
 
   .container-form {
@@ -49,9 +66,45 @@
     input {
       height: 120px;
     }
-    button {
-      max-width: 150px;
-      height: 30px;
+  }
+
+  .div-btn-submit {
+    display: flex;
+    width: 100%;
+    justify-content: right;
+
+    .button {
+      margin-top: 1rem;
     }
+  }
+
+  .custom-image-input::-webkit-file-upload-button {
+    width: 0.2rem;
+    visibility: hidden;
+  }
+  .custom-image-input::before {
+    content: "Inserez une image";
+    font-size: 1rem;
+    font-family: "Poppins", sans-serif;
+    padding: 2rem;
+  }
+
+  .custom-image-input {
+    background: #f8d779;
+    border: 1px solid #eeeff0;
+    border-radius: 10px;
+    position: relative;
+    width: 236px;
+    height: 40px;
+    font-weight: 500;
+    font-size: 12px;
+
+    /* identical to box height */
+
+    color: #ffffff;
+    padding: 8px 8px;
+
+    -webkit-user-select: none;
+    cursor: pointer;
   }
 }

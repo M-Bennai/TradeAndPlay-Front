@@ -1,5 +1,15 @@
 .section-mes-annonces {
   min-height: 100vh;
+  display: flex;
+
+  background-color: white;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10vh;
+
+  .container-article {
+    width: 1280px;
+  }
   .my-articles-container {
     display: flex;
     flex-direction: column;
@@ -7,6 +17,8 @@
   }
 
   h1 {
+    display: flex;
+    justify-content: left;
     font-weight: 600;
     font-size: 25px;
     line-height: 45px;

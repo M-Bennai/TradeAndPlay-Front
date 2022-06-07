@@ -12,11 +12,11 @@ const schema = yup.object().shape({
   title: yup
     .string()
     .min(3, "Le titre doit contenir au moins 3 caracteres")
-    .max(15, "Le titre ne doit pas contenir plus de 15 caracteres")
+    .max(25, "Le titre ne doit pas contenir plus de 25 caracteres")
     .required("Ce champ est obligatoire"),
-  categoryId: yup.string().required("Ce champ est obligatoire"),
-  valueId: yup.string().required("Ce champ est obligatoire"),
-  ageRangeId: yup.string().required("Ce champ est obligatoire"),
+  // categoryId: yup.string().required("Ce champ est obligatoire"),
+  // valueId: yup.string().required("Ce champ est obligatoire"),
+  // ageRangeId: yup.string().required("Ce champ est obligatoire"),
   condition: yup
     .string()
     .max(15, "etat du jouet trop long")
@@ -88,8 +88,8 @@ const CreerAnnonce = () => {
     console.log("i wanna see the authstate id you know :>> ", authState.id);
   }, []);
 
-  const addArticleHandler = async (e) => {
-    e.preventDefault();
+  const addArticleHandler = async () => {
+    //e.preventDefault();
 
     const formData = new FormData();
     formData.append("image", articleImage);
@@ -265,9 +265,9 @@ const CreerAnnonce = () => {
                       <label htmlFor="value">Valeur</label>
                       <Select
                         className="select-value"
-                        {...register("valueId", {
-                          required: "Required",
-                        })}
+                        // {...register("valueId", {
+                        //   required: "Required",
+                        // })}
                         options={options}
                         styles={customStyles}
                         placeholder="Valeur"
@@ -297,9 +297,10 @@ const CreerAnnonce = () => {
                       <label htmlFor="condition">Catégorie</label>
                       <Select
                         className="select-type"
-                        {...register("categoryId", {
-                          required: "Required",
-                        })}
+                        data-testid="input"
+                        // {...register("categoryId", {
+                        //   required: "Required",
+                        // })}
                         options={option}
                         styles={customStyles}
                         placeholder="Categorie"
@@ -353,9 +354,9 @@ const CreerAnnonce = () => {
                       <label htmlFor="ageRange">Tranche d'âge</label>
                       <Select
                         className="select-agerange"
-                        {...register("ageRangeId", {
-                          required: "Required",
-                        })}
+                        // {...register("ageRangeId", {
+                        //   required: "Required",
+                        // })}
                         options={options}
                         styles={customStyles}
                         placeholder="Tranche d'âge"

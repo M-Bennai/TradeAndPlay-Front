@@ -8,7 +8,7 @@ import axios from "axios";
 const url = `${process.env.REACT_APP_API_URL}/api/user/register`;
 
 const schema = yup.object().shape({
-  email: yup.string().email().required("Ce champs est requis"),
+  email: yup.string().email(),
   password: yup
     .string()
     .min(6, "Le mot de passe doit contenir au moins 6 caracteres")
@@ -41,8 +41,8 @@ const SignIn = () => {
     console.log("i wanna see the role:>> ", role);
   }, []);
 
-  const addUserHandler = async (e) => {
-    e.preventDefault();
+  const addUserHandler = async () => {
+    //e.preventDefault();
 
     const formData = new FormData();
     formData.append("firstName", firstName);
@@ -101,18 +101,24 @@ const SignIn = () => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         ></input>
-        <span className="warning-email">
+        <span className="warning-msg">
           {errors.email && errors.email.message}
         </span>
         <label>Mot de passe</label>
         <input
           className="input"
+          {...register("password", {
+            required: "Required",
+          })}
           type="password"
           name="password"
           placeholder="Mot de passe"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         ></input>
+        <span className="warning-msg">
+          {errors.password && errors.password.message}
+        </span>
         <label>Pseudo</label>
         <input
           className="input"

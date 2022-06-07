@@ -43,51 +43,53 @@ const MesAnnonces = () => {
   };
   return (
     <section className="section-mes-annonces">
-      <h1>Mes annonces</h1>
-      <div className="my-articles-container">
-        <div>
-          <button
-            className="btn-create-article"
-            onClick={() => navigate("/creeruneannonce", { replace: true })}
-          >
-            + Creer une annonce
-          </button>
-        </div>{" "}
-        {myArticles.map((el) => {
-          const { id, title, image, ageRange } = el;
-          console.log("lets check the id " + id);
-          const goToArticleDetails = (id) => {
-            navigate(`/annonces/${id}`);
-          };
-          return (
-            <div key={id} className="block-article">
-              <div className="article-img">
-                <figure>
-                  <img src={image} alt={title} />
-                </figure>
+      <div className="container-article">
+        <h1>Mes annonces</h1>
+        <div className="my-articles-container">
+          <div>
+            <button
+              className="button"
+              onClick={() => navigate("/creeruneannonce", { replace: true })}
+            >
+              + Creer une annonce
+            </button>
+          </div>{" "}
+          {myArticles.map((el) => {
+            const { id, title, image, ageRange } = el;
+            console.log("lets check the id " + id);
+            const goToArticleDetails = (id) => {
+              navigate(`/annonces/${id}`);
+            };
+            return (
+              <div key={id} className="block-article">
+                <div className="article-img">
+                  <figure>
+                    <img src={image} alt={title} />
+                  </figure>
+                </div>
+                <div className="info-article">
+                  <h3>{title}</h3>
+                  <span>{ageRange}</span>
+                  <button
+                    className="delete-btn"
+                    onClick={() => deleteArticle(id)}
+                  >
+                    supprimer mon article
+                  </button>
+                  <button
+                    className="update-btn"
+                    onClick={() => deleteArticle(id)}
+                  >
+                    modifier mon article
+                  </button>
+                  <button onClick={() => goToArticleDetails(id)}>
+                    Voir Annonce
+                  </button>
+                </div>
               </div>
-              <div className="info-article">
-                <h3>{title}</h3>
-                <span>{ageRange}</span>
-                <button
-                  className="delete-btn"
-                  onClick={() => deleteArticle(id)}
-                >
-                  supprimer mon article
-                </button>
-                <button
-                  className="update-btn"
-                  onClick={() => deleteArticle(id)}
-                >
-                  modifier mon article
-                </button>
-                <button onClick={() => goToArticleDetails(id)}>
-                  Voir Annonce
-                </button>
-              </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
     </section>
   );

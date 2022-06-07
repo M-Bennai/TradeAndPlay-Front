@@ -11,4 +11,10 @@
   font-family: "poppins";
   text-align: center;
   letter-spacing: 0.01em;
+  cursor: pointer;
+
+  &:hover {
+    border: 1px solid #fafafa;
+    background: linear-gradient(180deg, #a9d3fe 0%, #84bfff 100%);
+  }
 }

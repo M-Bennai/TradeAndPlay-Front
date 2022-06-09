@@ -14,6 +14,9 @@ const DetailsAnnonce = () => {
   const [article, setArticle] = useState("");
   const [imageArticle, setImageArticle] = useState("");
   const [user, setUser] = useState("");
+  const [value, setValue] = useState("");
+  const [category, setCategory] = useState("");
+  const [ageRange, setAgeRange] = useState("");
   const [selectToys, setSelectToys] = useState(false);
   const [modalIsOpen, setIsOpen] = useState(false);
   //const [showButton, setShowButton] = useState(true);
@@ -108,9 +111,14 @@ const DetailsAnnonce = () => {
       .get(`${process.env.REACT_APP_API_URL}/api/article/oneArticle/${id}`)
       .then((res) => {
         console.log("res.data :>> ", res.data.oneArticle.user);
+
         setArticle(res.data.oneArticle);
         setImageArticle(res.data.oneArticle.image);
         setUser(res.data.oneArticle.user);
+        setValue(res.data.oneArticle.value);
+        setAgeRange(res.data.oneArticle.ageRange);
+        setCategory(res.data.oneArticle.category);
+        console.log(" VALUE PLEASE :>> ", res.data.oneArticle.value);
         console.log("image article :>> ", res.data.oneArticle.image);
       })
       .catch((err) => {
@@ -146,8 +154,10 @@ const DetailsAnnonce = () => {
     const btn = document.getElementById("modal-exchange");
     if (article.valueId === obj.id) {
       btn.classList.add("btn-next-active");
+      btn.disable = false;
     } else {
       btn.classList.remove("btn-next-active");
+      btn.disable = true;
     }
     console.log("article. :>> ", article.valueId);
     console.log("userArticlesFromAPI.valuedId :>> ", articleToExchange.valueId);
@@ -179,6 +189,7 @@ const DetailsAnnonce = () => {
       );
   };
 
+  console.log("user.city :>> ", user.address);
   return (
     <section className="section-details">
       <h1 className="title-article">{article.title}</h1>
@@ -188,111 +199,116 @@ const DetailsAnnonce = () => {
         </figure>
         <div className="container-article-details">
           <div className="container-user-details">
-            <img src={user.image} alt={user.firstName} />
-            <div className="user-details">
-              <p>Mise en ligne par </p>
-              <span className="user-name">{user.firstName}</span>
+            <div className="img-and-user-details">
+              <img src={user.image} alt={user.firstName} />
+              <div className="user-details">
+                <p>Mise en ligne par </p>
+                <span className="user-name">{user.firstName}</span>
+              </div>
             </div>
-            <div>
-              <span>{user.city}</span>
-            </div>
-          </div>
-          <div className="article-tags">
-            <span>ADD ARTICLE CATEGORY</span>
-            <span className="span-condition">Etat : {article.condition}</span>
-          </div>
-          <div className="container-upper-details">
-            <div className="article-details">
-              <span>{article.ageRange}</span>
-            </div>
-            <div className="article-date">
-              <span>ADD CITY HERE</span>
-              <span>{article.createdAt}</span>
+            <div className="div-user-city">
+              <span>📍 {user.city}</span>
             </div>
           </div>
-          <div>
-            <h3>Description</h3>
-            <p>{article.description}</p>
-          </div>
-          {authState.role === "client" ? (
-            <div>
-              {articleToExchange.map((el, index) => {
-                //const btn = document.getElementById("modal-exchange");
-                console.log("jveux voir el", el);
-                let valueId;
-                const option =
-                  userArticlesFromAPI &&
-                  userArticlesFromAPI.map((el) => {
-                    //if (article.valueId === el.valueId) {
-                    console.log("lets compare with wesh " + article.valueId);
-                    console.log("wesh wesh" + el.valueId);
-                    console.log("ici jveux voir l'id -->>", el.id);
-                    console.log(el);
-                    valueId = el.valueId;
-                    console.log(valueId);
-                    return {
-                      value: el.title,
-                      label: el.title + ` peut être échangé`,
-                      name: "articleToExchange",
-                      id: el.valueId,
-                    };
+          <div className="container-article-description">
+            <div className="article-tags">
+              <span className="span-value">Catégorie {value.name}</span>
+              <span className="span-condition">Etat : {article.condition}</span>
+            </div>
+            <div className="container-upper-details">
+              <div className="article-details">
+                <span className="span-agerange">● {ageRange.range}</span>
+              </div>
+              <div className="article-date">
+                <span>{article.createdAt}</span>
+              </div>
+            </div>
+            <div className="div-description">
+              <h3>Description</h3>
+              <p>{article.description}</p>
+            </div>
 
-                    //} else {
-                    //return btn.classList.remove("btn-next-active");
-                    //}
-                  });
+            <h4>Proposer un échange</h4>
+            {authState.role === "client" ? (
+              <div>
+                {articleToExchange.map((el, index) => {
+                  //const btn = document.getElementById("modal-exchange");
+                  console.log("jveux voir el", el);
+                  let valueId;
+                  const option =
+                    userArticlesFromAPI &&
+                    userArticlesFromAPI.map((el) => {
+                      //if (article.valueId === el.valueId) {
+                      console.log("lets compare with wesh " + article.valueId);
+                      console.log("wesh wesh" + el.valueId);
+                      console.log("ici jveux voir l'id -->>", el.id);
+                      console.log(el);
+                      valueId = el.valueId;
+                      console.log(valueId);
+                      return {
+                        value: el.title,
+                        label: el.title + ` peut être échangé`,
+                        name: "articleToExchange",
+                        id: el.valueId,
+                      };
 
-                return (
-                  <div key={index}>
-                    <Select
-                      className="select-toys"
-                      options={option}
-                      styles={customStyles}
-                      // onChange={(obj) => handleArticleToExchange(obj, index)}
-                      onChange={(obj) => handleArticleToExchange(obj)}
-                      placeholder="Mes jouets"
-                      name="articleToExchange"
-                      id="select-toys"
-                    />
-                  </div>
-                );
-              })}
-            </div>
-          ) : (
-            <p>
-              Il faut un compte et un objet de la meme valeur pour pouvoir
-              proposer un échange
-            </p>
-          )}
-          <Modal
-            isOpen={modalIsOpen}
-            onAfterOpen={afterOpenModal}
-            onRequestClose={closeModal}
-            style={customStyleModal}
-            contentLabel="Modal"
-          >
-            <p>{user.email}</p>
+                      //} else {
+                      //return btn.classList.remove("btn-next-active");
+                      //}
+                    });
 
-            <form ref={form} onSubmit={sendEmail}>
-              <label>Name{authState.firstName}</label>
-              <input type="text" name="name" value={authState.firstName} />
-              <label>Email{user.email}</label>
-              <input type="email" name="user_email" /*value={user.email}*/ />
-              <label>Message</label>
-              <textarea name="message" />
-              <input type="submit" value="Send" />
-            </form>
-          </Modal>
+                  return (
+                    <div key={index}>
+                      <Select
+                        className="select-toys"
+                        options={option}
+                        styles={customStyles}
+                        // onChange={(obj) => handleArticleToExchange(obj, index)}
+                        onChange={(obj) => handleArticleToExchange(obj)}
+                        placeholder="Mes jouets"
+                        name="articleToExchange"
+                        id="select-toys"
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+            ) : (
+              <p className="msg-info-exhange">
+                IL FAUT UN COMPTE ET UN OBJET DE MEME VALEUR POUR POUVOIR
+                PROPOSER UN ÉCHANGE
+              </p>
+            )}
+            <Modal
+              isOpen={modalIsOpen}
+              onAfterOpen={afterOpenModal}
+              onRequestClose={closeModal}
+              style={customStyleModal}
+              contentLabel="Modal"
+            >
+              <p>{user.email}</p>
+
+              <form ref={form} onSubmit={sendEmail}>
+                <label>Name{authState.firstName}</label>
+                <input type="text" name="name" value={authState.firstName} />
+                <label>Email{user.email}</label>
+                <input type="email" name="user_email" /*value={user.email}*/ />
+                <label>Message</label>
+                <textarea name="message" />
+                <input type="submit" value="Send" />
+              </form>
+            </Modal>
+
+            <button
+              className="btn-exchange"
+              id="modal-exchange"
+              disable
+              onClick={openModal}
+            >
+              Proposer un échange
+            </button>
+          </div>
         </div>
-
-        <button
-          className="btn-exchange"
-          id="modal-exchange"
-          onClick={openModal}
-          disabled
-        >
-          Proposer un échange
-        </button>
       </div>
     </section>
   );

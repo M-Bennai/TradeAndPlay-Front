@@ -13,7 +13,7 @@ const schema = yup.object().shape({
     .required("Ce champ est obligatoire"),
   password: yup
     .string()
-    .min(3, "Please fill in the password")
+    .min(6, "Please fill in the password")
     .required("Ce champ est obligatoire"),
 });
 const url = `${process.env.REACT_APP_API_URL}/api/user/login`;
